@@ -11,7 +11,7 @@ const History: React.FC = () => {
       <section className="relative h-[85vh] w-full flex items-end overflow-hidden border-b border-[#1F2E33]/30">
         <div 
           className="absolute inset-0 bg-cover bg-center transition-transform duration-[30000ms] scale-110 translate-x-[-2%]"
-          style={{ backgroundImage: `url(${houseImageUrl})` }}
+          style={{ backgroundImage: '/images/1322 Maple Street house at night.jpeg'; }}
         >
           {/* Moody Overlays */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F12] via-[#0B0F12]/30 to-transparent" />
