@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const History: React.FC = () => {
   // The provided cinematic night scene of 1322 Maple Street
-  const houseImageUrl = "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&q=80&w=1920";
+  const houseImageUrl = '/images/1322 Maple Street house at night.jpeg';
 
   return (
     <div className="relative min-h-screen bg-[#0B0F12]">
