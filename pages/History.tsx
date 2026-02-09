@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const History: React.FC = () => {
   // The provided cinematic night scene of 1322 Maple Street
-  const houseImageUrl = '/images/history-house.jpg';
 
   return (
     <div className="relative min-h-screen bg-[#0B0F12]">
@@ -11,7 +10,7 @@ const History: React.FC = () => {
       <section className="relative h-[85vh] w-full flex items-end overflow-hidden border-b border-[#1F2E33]/30">
         <div
   className="absolute inset-0 bg-cover bg-center transition-transform duration-[30000ms] scale-110 translate-x-[-2%]"
-  style={{ backgroundImage: `url(${houseImageUrl})` }}
+  style={{ backgroundImage: "url(/images/house.jpeg.jpg)" }}
         >
           {/* Moody Overlays */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F12] via-[#0B0F12]/30 to-transparent" />
