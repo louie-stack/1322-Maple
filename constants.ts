@@ -43,7 +43,7 @@ export const EXPERIENCES: Experience[] = [
     title: 'HAUNTED DOLL ROOM',
     description: 'Home to multiple haunted artifacts that refuse to stay still.',
     longDescription: 'The Doll Room houses objects that have been donated or recovered from locations with intense paranormal history. These items are not mere playthings; they are containers for energy that refuses to dissipate.',
-    imageUrl: 'https://images.unsplash.com/photo-1531147646552-1eec68116469?auto=format&fit=crop&q=80&w=1000',
+    imageUrl: '/images/HauntedDollRoom.jpeg',
   }
 ];
 
