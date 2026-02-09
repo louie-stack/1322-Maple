@@ -53,7 +53,7 @@ export const HAUNTED_DOLLS: HauntedDoll[] = [
     name: 'DIRTY GERTY',
     description: 'One of the most haunted dolls in the United States.',
     longDescription: 'Dirty Gerty is widely regarded as one of the most haunted dolls in the United States. Guests report sudden movement, cold spots, whispers, and overwhelming feelings of dread.\n\nShe is not a prop. She is not a replica. And she is not alone.',
-    imageUrl: 'https://images.unsplash.com/photo-1543329064-904c965e6eb4?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/images/Gerty.jpeg',
   },
   {
     id: 'rosemary',
