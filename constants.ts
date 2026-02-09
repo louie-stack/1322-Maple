@@ -60,6 +60,6 @@ export const HAUNTED_DOLLS: HauntedDoll[] = [
     name: 'ROSEMARY',
     description: 'A presence felt rather than seen.',
     longDescription: 'Very little is known about Rosemary. Guests report intense sadness, pressure in the chest, and the sensation of being watched closely when near her.\n\nSome spirits do not want their stories told.',
-    imageUrl: 'https://images.unsplash.com/photo-1528659518398-a3203417730e?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/images/Rosemary.jpeg',
   }
 ];
