@@ -22,7 +22,7 @@ export const EXPERIENCES: Experience[] = [
     title: 'THE PSYCHOMANTEUM',
     description: 'A darkened chamber designed to encourage visions and contact with the spirit world.',
     longDescription: 'Inspired by the work of Dr. Raymond Moody, the Psychomanteum is a darkened chamber designed to encourage visions and contact with the spirit world.\n\nVisitors sit alone in near-total darkness, gazing into reflective blackness illuminated only by candlelight. This practice traces its roots to the ancient Greek Necromanteion, where seekers attempted to communicate with the dead.\n\nSome report seeing faces. Some hear voices. Others leave shaken, unable to explain what they experienced.',
-    imageUrl: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&q=80&w=1000',
+    imageUrl: '/images/psychomanteum.jpg',
   },
   {
     id: 'deprivation',
