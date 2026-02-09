@@ -29,7 +29,7 @@ export const EXPERIENCES: Experience[] = [
     title: 'HAUNTED DEPRIVATION CHAMBER',
     description: 'Strips away light, sound, and orientation — leaving only darkness and your thoughts.',
     longDescription: 'Welcome to your nightmare.\n\nThe Haunted Deprivation Chamber strips away light, sound, and orientation — leaving only darkness and your thoughts. In this void, guests report whispers, touches, and voices that seem to come from nowhere.\n\nThis experience is not for the faint of heart.',
-    imageUrl: 'https://images.unsplash.com/photo-1519074063912-ad2d602159d7?auto=format&fit=crop&q=80&w=1000',
+    imageUrl: '/images/HauntedDeprivationChamber.jpeg', 
   },
   {
     id: 'faces',
