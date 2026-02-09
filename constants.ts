@@ -36,7 +36,7 @@ export const EXPERIENCES: Experience[] = [
     title: 'FACES OF THE DEAD ROOM',
     description: 'The dead reveal themselves. Faces emerge. Voices surround you.',
     longDescription: 'Welcome to your personal nightmare.\n\nIn this room, the dead reveal themselves. Faces emerge. Voices surround you. The line between imagination and reality blurs as the darkness closes in.\n\nMany guests leave early. Some refuse to speak afterward.',
-    imageUrl: 'https://images.unsplash.com/photo-1461696114087-397271a7aedc?auto=format&fit=crop&q=80&w=1000',
+    imageUrl: '/images/FaceoftheDeadroom.jpeg',
   },
   {
     id: 'doll-room',
