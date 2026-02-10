@@ -12,7 +12,6 @@ const THREAT_MESSAGES = [
 
 const HorrorSystem: React.FC = () => {
   const [showThreat, setShowThreat] = useState<string | null>(null);
-  const [darkness, setDarkness] = useState(0.3);
   const parallaxRef = useRef<HTMLDivElement>(null);
   const lastMove = useRef(Date.now());
 
@@ -20,7 +19,6 @@ const HorrorSystem: React.FC = () => {
      🧠 THREATS TIED TO ACTIONS
   ========================= */
 
-  // Trigger threat on aggressive mouse movement
   useEffect(() => {
     const onMove = () => {
       const now = Date.now();
@@ -35,7 +33,6 @@ const HorrorSystem: React.FC = () => {
     return () => window.removeEventListener('mousemove', onMove);
   }, []);
 
-  // Trigger threat when user tries to leave
   useEffect(() => {
     const onLeave = (e: MouseEvent) => {
       if (e.clientY <= 0) {
@@ -53,29 +50,15 @@ const HorrorSystem: React.FC = () => {
   }
 
   /* =========================
-     🔦 LIGHT FALLOFF ON SCROLL
-  ========================= */
-
-  useEffect(() => {
-    const onScroll = () => {
-      const scrolled = window.scrollY;
-      const max = document.body.scrollHeight - window.innerHeight;
-      setDarkness(0.3 + Math.min(scrolled / max, 0.6));
-    };
-
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  /* =========================
      🎥 SUBTLE CAMERA PARALLAX
   ========================= */
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
       if (!parallaxRef.current) return;
-      const x = (e.clientX / window.innerWidth - 0.5) * 10;
-      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+
+      const x = (e.clientX / window.innerWidth - 0.5) * 6;
+      const y = (e.clientY / window.innerHeight - 0.5) * 6;
 
       parallaxRef.current.style.transform = `translate(${x}px, ${y}px)`;
     };
@@ -91,26 +74,16 @@ const HorrorSystem: React.FC = () => {
       ========================= */}
       <div
         ref={parallaxRef}
-        className="fixed inset-0 pointer-events-none z-[300] transition-transform duration-500 ease-out"
+        className="fixed inset-0 pointer-events-none z-[300] transition-transform duration-700 ease-out"
       />
 
       {/* =========================
-          🌫 DRIFTING FOG (VISIBLE)
+          🌫 DRIFTING FOG (SAFE)
       ========================= */}
       <div className="fixed inset-0 pointer-events-none z-[400] overflow-hidden">
         <div className="fog fog-1" />
         <div className="fog fog-2" />
       </div>
-
-      {/* =========================
-          🔦 LIGHT FALLOFF
-      ========================= */}
-      <div
-        className="fixed inset-0 pointer-events-none z-[500]"
-        style={{
-          background: `radial-gradient(circle at center, rgba(0,0,0,0) 30%, rgba(0,0,0,${darkness}) 85%)`
-        }}
-      />
 
       {/* =========================
           🧠 THREAT BANNER
@@ -132,27 +105,27 @@ const HorrorSystem: React.FC = () => {
           inset: -30%;
           background: radial-gradient(
             ellipse at center,
-            rgba(255,255,255,0.18) 0%,
-            rgba(255,255,255,0.1) 30%,
-            rgba(255,255,255,0.05) 55%,
+            rgba(255,255,255,0.15) 0%,
+            rgba(255,255,255,0.08) 30%,
+            rgba(255,255,255,0.04) 55%,
             rgba(255,255,255,0) 70%
           );
-          filter: blur(50px);
+          filter: blur(45px);
           animation: drift linear infinite;
         }
 
         .fog-1 {
-          animation-duration: 200s;
+          animation-duration: 220s;
         }
 
         .fog-2 {
-          animation-duration: 320s;
+          animation-duration: 360s;
           transform: rotate(180deg);
         }
 
         @keyframes drift {
-          from { transform: translateX(-10%) scale(1.2); }
-          to { transform: translateX(10%) scale(1.2); }
+          from { transform: translateX(-8%) scale(1.2); }
+          to { transform: translateX(8%) scale(1.2); }
         }
 
         @keyframes threat {
