@@ -138,35 +138,34 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-[#8E1B1B] selection:text-white relative">
-      <ScrollToTop />
-      <FogBackground />
-      <Navbar />
-      
-      {/* Subliminal Flash Overlay - 7s interval / 160ms duration */}
-      {showFlash && (
-        <div className="fixed inset-0 z-[9999] pointer-events-none bg-black flex items-center justify-center">
-          <img 
-            src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&q=80&w=1000" 
-            className="w-full h-full object-cover grayscale invert contrast-[800%] brightness-[150%] mix-blend-difference"
-            alt="Terror"
-          />
-        </div>
-      )}
+  <div className="min-h-screen flex flex-col selection:bg-[#8E1B1B] selection:text-white relative">
+    <ScrollToTop />
+    <HorrorSystem />
+    <Navbar />
+    
+    {showFlash && (
+      <div className="fixed inset-0 z-[9999] pointer-events-none bg-black flex items-center justify-center">
+        <img 
+          src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&q=80&w=1000" 
+          className="w-full h-full object-cover grayscale invert contrast-[800%] brightness-[150%] mix-blend-difference"
+          alt="Terror"
+        />
+      </div>
+    )}
 
-      <main className="flex-grow z-10">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/experiences" element={<Experiences />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/rules" element={<Rules />} />
-        </Routes>
-      </main>
+    <main className="flex-grow z-10">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/experiences" element={<Experiences />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/rules" element={<Rules />} />
+      </Routes>
+    </main>
 
-      <Footer />
-    </div>
-  );
+    <Footer />
+  </div>
+);
 };
 
 export default App;
