@@ -1,171 +1,169 @@
 
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const THREAT_MESSAGES = [
   "YOU ARE NOT SAFE",
   "THEY ARE WATCHING",
-  "1322 MAPLE NEVER LETS YOU LEAVE",
-  "DONT LOOK BEHIND YOU",
-  "YOU BROUGHT THEM WITH YOU",
-  "GOD CANT HEAR YOU HERE",
-  "CLOSE YOUR EYES"
+  "DO NOT TURN AROUND",
+  "1322 MAPLE KNOWS YOU",
+  "YOU SHOULDN'T BE HERE",
+  "IT FOLLOWED YOU IN"
 ];
 
 const HorrorSystem: React.FC = () => {
-  const [showFlash, setShowFlash] = useState(false);
-  const [threat, setThreat] = useState<string | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
+  const [showThreat, setShowThreat] = useState<string | null>(null);
+  const [darkness, setDarkness] = useState(0.3);
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const lastMove = useRef(Date.now());
 
   /* =========================
-     AUDIO — SYNTH SCREAM
+     🧠 THREATS TIED TO ACTIONS
   ========================= */
-  const playScream = useCallback(() => {
-    if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
-    }
 
-    const ctx = audioContextRef.current;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+  // Trigger threat on aggressive mouse movement
+  useEffect(() => {
+    const onMove = () => {
+      const now = Date.now();
+      if (now - lastMove.current < 60) {
+        setShowThreat(randomThreat());
+        setTimeout(() => setShowThreat(null), 1200);
+      }
+      lastMove.current = now;
+    };
 
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(90, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.15);
-    osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.9);
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
+  }, []);
 
-    gain.gain.setValueAtTime(0, ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + 0.05);
-    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1);
+  // Trigger threat when user tries to leave
+  useEffect(() => {
+    const onLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0) {
+        setShowThreat("DON'T LEAVE");
+        setTimeout(() => setShowThreat(null), 1200);
+      }
+    };
 
-    osc.connect(gain);
-    gain.connect(ctx.destination);
+    document.addEventListener('mouseleave', onLeave);
+    return () => document.removeEventListener('mouseleave', onLeave);
+  }, []);
 
-    osc.start();
-    osc.stop(ctx.currentTime + 1);
+  function randomThreat() {
+    return THREAT_MESSAGES[Math.floor(Math.random() * THREAT_MESSAGES.length)];
+  }
+
+  /* =========================
+     🔦 LIGHT FALLOFF ON SCROLL
+  ========================= */
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrolled = window.scrollY;
+      const max = document.body.scrollHeight - window.innerHeight;
+      setDarkness(0.3 + Math.min(scrolled / max, 0.6));
+    };
+
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   /* =========================
-     SUBLIMINAL FLASHES
+     🎥 SUBTLE CAMERA PARALLAX
   ========================= */
+
   useEffect(() => {
-    const flashInterval = setInterval(() => {
-      setShowFlash(true);
-      setTimeout(() => setShowFlash(false), 150);
+    const onMouseMove = (e: MouseEvent) => {
+      if (!parallaxRef.current) return;
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
 
-      if (Math.random() > 0.7) {
-        playScream();
-      }
-    }, 3000);
+      parallaxRef.current.style.transform = `translate(${x}px, ${y}px)`;
+    };
 
-    return () => clearInterval(flashInterval);
-  }, [playScream]);
-
-  /* =========================
-     THREAT BANNER
-  ========================= */
-  useEffect(() => {
-    const bannerInterval = setInterval(() => {
-      const msg = THREAT_MESSAGES[Math.floor(Math.random() * THREAT_MESSAGES.length)];
-      setThreat(msg);
-      setTimeout(() => setThreat(null), 1000);
-    }, 2000);
-
-    return () => clearInterval(bannerInterval);
+    window.addEventListener('mousemove', onMouseMove);
+    return () => window.removeEventListener('mousemove', onMouseMove);
   }, []);
 
   return (
     <>
       {/* =========================
-          SUBLIMINAL FLASH
+          🎥 PARALLAX WRAPPER
       ========================= */}
-      {showFlash && (
-        <div className="fixed inset-0 z-[1000] pointer-events-none">
-          <img
-            src={`https://picsum.photos/1920/1080?grayscale&blur=2&sig=${Math.random()}`}
-            alt="Fear"
-            className="w-full h-full object-cover mix-blend-difference invert opacity-40 scale-110"
-          />
+      <div
+        ref={parallaxRef}
+        className="fixed inset-0 pointer-events-none z-[300] transition-transform duration-500 ease-out"
+      />
+
+      {/* =========================
+          🌫 DRIFTING FOG (VISIBLE)
+      ========================= */}
+      <div className="fixed inset-0 pointer-events-none z-[400] overflow-hidden">
+        <div className="fog fog-1" />
+        <div className="fog fog-2" />
+      </div>
+
+      {/* =========================
+          🔦 LIGHT FALLOFF
+      ========================= */}
+      <div
+        className="fixed inset-0 pointer-events-none z-[500]"
+        style={{
+          background: `radial-gradient(circle at center, rgba(0,0,0,0) 30%, rgba(0,0,0,${darkness}) 85%)`
+        }}
+      />
+
+      {/* =========================
+          🧠 THREAT BANNER
+      ========================= */}
+      {showThreat && (
+        <div className="fixed top-28 left-0 w-full z-[900] flex justify-center pointer-events-none">
+          <div className="bg-red-700 text-black px-10 py-3 text-2xl font-bold tracking-widest animate-threat">
+            {showThreat}
+          </div>
         </div>
       )}
 
       {/* =========================
-          THREAT BANNER
-      ========================= */}
-      <div className="fixed top-24 left-0 z-[800] pointer-events-none w-full overflow-hidden">
-        {threat && (
-          <div className="bg-red-700 text-black px-8 py-2 font-metal text-2xl animate-slide-in whitespace-nowrap border-y border-black shadow-[0_0_20px_rgba(255,0,0,0.5)]">
-            {threat}
-          </div>
-        )}
-      </div>
-
-      {/* =========================
-          CINEMATIC VIGNETTE
-      ========================= */}
-      <div className="fixed inset-0 pointer-events-none z-[500]">
-        <div
-          className="w-full h-full"
-          style={{
-            background: `
-              radial-gradient(
-                ellipse at center,
-                rgba(0,0,0,0) 40%,
-                rgba(0,0,0,0.25) 65%,
-                rgba(0,0,0,0.65) 100%
-              )
-            `
-          }}
-        />
-      </div>
-
-      {/* =========================
-          DRIFTING FOG
-      ========================= */}
-      <div className="fixed inset-0 pointer-events-none z-[400] overflow-hidden">
-        <div className="fog-layer fog-1" />
-        <div className="fog-layer fog-2" />
-      </div>
-
-      {/* =========================
-          STYLES
+          🎞 STYLES
       ========================= */}
       <style>{`
-        @keyframes slide-in {
-          0% { transform: translateX(-100%); opacity: 0; }
-          10% { transform: translateX(0); opacity: 1; }
-          90% { transform: translateX(0); opacity: 1; }
-          100% { transform: translateX(-100%); opacity: 0; }
-        }
-
-        .animate-slide-in {
-          animation: slide-in 1s forwards;
-        }
-
-        .fog-layer {
+        .fog {
           position: absolute;
-          inset: -20%;
-          background-image: url("https://www.transparenttextures.com/patterns/foggy-birds.png");
-          opacity: 0.12;
+          inset: -30%;
+          background: radial-gradient(
+            ellipse at center,
+            rgba(255,255,255,0.18) 0%,
+            rgba(255,255,255,0.1) 30%,
+            rgba(255,255,255,0.05) 55%,
+            rgba(255,255,255,0) 70%
+          );
+          filter: blur(50px);
           animation: drift linear infinite;
         }
 
         .fog-1 {
-          animation-duration: 180s;
-          transform: scale(1.2);
+          animation-duration: 200s;
         }
 
         .fog-2 {
-          animation-duration: 260s;
-          transform: scale(1.4) rotate(180deg);
+          animation-duration: 320s;
+          transform: rotate(180deg);
         }
 
         @keyframes drift {
-          from {
-            transform: translateX(-10%) scale(1.2);
-          }
-          to {
-            transform: translateX(10%) scale(1.2);
-          }
+          from { transform: translateX(-10%) scale(1.2); }
+          to { transform: translateX(10%) scale(1.2); }
+        }
+
+        @keyframes threat {
+          0% { opacity: 0; transform: scale(0.95); }
+          15% { opacity: 1; transform: scale(1); }
+          85% { opacity: 1; }
+          100% { opacity: 0; transform: scale(1.05); }
+        }
+
+        .animate-threat {
+          animation: threat 1.2s ease-out forwards;
         }
       `}</style>
     </>
