@@ -103,5 +103,21 @@ const HorrorSystem: React.FC = () => {
     </>
   );
 };
+{/* Global Cinematic Vignette */}
+<div className="fixed inset-0 pointer-events-none z-[500]">
+  <div
+    className="w-full h-full"
+    style={{
+      background: `
+        radial-gradient(
+          ellipse at center,
+          rgba(0,0,0,0) 40%,
+          rgba(0,0,0,0.25) 65%,
+          rgba(0,0,0,0.6) 100%
+        )
+      `
+    }}
+  />
+</div>
 
 export default HorrorSystem;
