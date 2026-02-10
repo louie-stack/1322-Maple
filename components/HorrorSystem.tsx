@@ -99,6 +99,32 @@ const HorrorSystem: React.FC = () => {
         .animate-slide-in {
           animation: slide-in 1s forwards;
         }
+        .fog-layer {
+  position: absolute;
+  inset: -20%;
+  background: url("https://www.transparenttextures.com/patterns/foggy-birds.png");
+  opacity: 0.12;
+  animation: drift linear infinite;
+}
+
+.fog-1 {
+  animation-duration: 180s;
+  transform: scale(1.2);
+}
+
+.fog-2 {
+  animation-duration: 260s;
+  transform: scale(1.4) rotate(180deg);
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-10%) scale(1.2);
+  }
+  to {
+    transform: translateX(10%) scale(1.2);
+  }
+}
       `}</style>
     </>
   );
@@ -118,6 +144,11 @@ const HorrorSystem: React.FC = () => {
       `
     }}
   />
+</div>
+{/* Slow Drifting Fog */}
+<div className="fixed inset-0 pointer-events-none z-[400] overflow-hidden">
+  <div className="fog-layer fog-1" />
+  <div className="fog-layer fog-2" />
 </div>
 
 export default HorrorSystem;
