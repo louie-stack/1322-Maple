@@ -22,7 +22,7 @@ const Home: React.FC = () => {
         {/* Cinematic Background */}
         <div 
           className="absolute inset-0 bg-cover bg-center transition-transform duration-[20000ms] scale-105"
-          style={{ backgroundImage: 'url("/images/HeroBanner.JPEG.jpg")' }}
+          style={{ backgroundImage: 'url("/images/HeroBanner.jpg")' }}
         >
           {/* Mood Gradients */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F12]/70 via-[#0B0F12]/20 to-[#0B0F12]" />
