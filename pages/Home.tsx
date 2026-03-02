@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { EXPERIENCES, HAUNTED_DOLLS, CONTACT_INFO } from '../constants';
+import { trackEvent } from '../tracking';
 
 const Home: React.FC = () => {
   const gerty = HAUNTED_DOLLS.find(d => d.id === 'dirty-gerty');
@@ -43,11 +44,11 @@ const Home: React.FC = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/booking" className="cta-base cta-primary">
-              BUY TICKETS
+            <Link to="/booking#reserve" className="cta-base cta-primary" onClick={() => trackEvent('book_now_click', { source: 'home_hero_primary' })}>
+              BOOK NOW
             </Link>
-            <Link to="/booking" className="cta-base cta-secondary">
-              ENTER IF YOU DARE
+            <Link to="/booking" className="cta-base cta-secondary" onClick={() => trackEvent('book_now_click', { source: 'home_hero_secondary' })}>
+              PLAN YOUR VISIT
             </Link>
           </div>
         </div>
@@ -150,6 +151,44 @@ const Home: React.FC = () => {
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================
+          VISITOR INFO + FAQ SNAPSHOT
+      ========================= */}
+      <section className="py-28 px-6 bg-[#0E1216] border-y border-[#1F2E33]/30">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 reveal">
+          <div className="rounded-xl border border-[#1F2E33]/40 bg-[#0B0F12]/70 p-8">
+            <h3 className="text-xs tracking-[0.4em] text-[#8E1B1B] uppercase font-bold mb-5">Visitor Info</h3>
+            <ul className="space-y-3 text-[#E6E8EA]/75 text-sm">
+              <li>• Location: 1322 Maple Street, Atchison, Kansas</li>
+              <li>• Limited-capacity booking windows</li>
+              <li>• Mobile booking flow + call option available</li>
+              <li>• Best experience: pre-book your preferred date/time</li>
+            </ul>
+            <Link to="/booking#reserve" className="cta-base cta-primary mt-7 inline-flex" onClick={() => trackEvent('book_now_click', { source: 'visitor_info' })}>
+              BOOK NOW
+            </Link>
+          </div>
+
+          <div className="rounded-xl border border-[#1F2E33]/40 bg-[#0B0F12]/70 p-8">
+            <h3 className="text-xs tracking-[0.4em] text-[#8E1B1B] uppercase font-bold mb-5">Quick FAQ</h3>
+            <div className="space-y-4 text-sm">
+              <div>
+                <p className="font-semibold">How do I reserve?</p>
+                <p className="text-[#E6E8EA]/70">Use BOOK NOW and complete the booking form in under 2 minutes.</p>
+              </div>
+              <div>
+                <p className="font-semibold">Can I call instead?</p>
+                <p className="text-[#E6E8EA]/70">Yes. Call {CONTACT_INFO.PHONE} and we’ll help you secure your slot.</p>
+              </div>
+              <div>
+                <p className="font-semibold">Is this mobile-friendly?</p>
+                <p className="text-[#E6E8EA]/70">Yes — booking paths are optimized for mobile-first conversion.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

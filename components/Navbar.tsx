@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CONTACT_INFO } from '../constants';
+import { trackEvent } from '../tracking';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,10 +48,11 @@ const Navbar: React.FC = () => {
             {CONTACT_INFO.PHONE}
           </a>
           <Link
-            to="/booking"
+            to="/booking#reserve"
             className="cta-base cta-primary !px-6 !py-2 !text-[10px]"
+            onClick={() => trackEvent('book_now_click', { source: 'navbar_desktop' })}
           >
-            BOOK YOUR EXPERIENCE
+            BOOK NOW
           </Link>
         </div>
 
@@ -76,9 +78,12 @@ const Navbar: React.FC = () => {
             </Link>
           ))}
           <Link
-            to="/booking"
+            to="/booking#reserve"
             className="cta-base cta-primary mt-8"
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              trackEvent('book_now_click', { source: 'navbar_mobile' });
+              setIsOpen(false);
+            }}
           >
             BOOK NOW
           </Link>

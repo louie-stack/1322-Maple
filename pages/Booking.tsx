@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { CONTACT_INFO } from '../constants';
+import { trackEvent } from '../tracking';
 
 const Booking: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
@@ -91,7 +92,7 @@ const Booking: React.FC = () => {
         </div>
 
         {/* Booking Section */}
-        <div className="reveal">
+        <div className="reveal" id="reserve">
           <div className="bg-[#12161A] border border-[#1F2E33]/20 p-12 md:p-16 relative">
             <div className="absolute top-0 right-0 w-48 h-48 bg-[#8E1B1B]/5 blur-[100px] rounded-full pointer-events-none" />
             <h3 className="text-3xl font-bold tracking-[0.2em] mb-10 uppercase">Ticket Reservation</h3>
@@ -134,7 +135,10 @@ const Booking: React.FC = () => {
                   <input type="number" min="1" defaultValue="1" className="w-full bg-[#0B0F12] border border-[#1F2E33]/30 px-6 py-5 focus:outline-none focus:border-[#8E1B1B] transition-all text-[#E6E8EA]/80 font-light" />
                </div>
                
-               <button className="cta-base cta-primary w-full mt-6">
+               <button
+                 className="cta-base cta-primary w-full mt-6"
+                 onClick={() => trackEvent('booking_check_availability_click', { page: 'booking', selectedDate: selectedDate ?? 'none' })}
+               >
                  CHECK AVAILABILITY
                </button>
             </div>
